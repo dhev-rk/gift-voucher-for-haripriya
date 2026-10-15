@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Birthday Gift for Haripriya</title>
+<style>
+  :root {
+    --bg1: #ffe3ec;
+    --bg2: #e6dcff;
+    --ink: #3b2a4a;
+    --accent: #e0457b;
+    --accent-dark: #b92f61;
+    --card: #ffffff;
+    --muted: #7b6b8a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--ink);
+    background: linear-gradient(160deg, var(--bg1), var(--bg2));
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  main { width: 100%; max-width: 460px; }
+  .hidden { display: none !important; }
+  .screen { text-align: center; animation: fadeIn .6s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+  /* Cover */
+  .gift {
+    font-size: 120px;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-block;
+    animation: bounce 1.6s ease-in-out infinite;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .gift:focus-visible { outline: 3px solid var(--accent); border-radius: 16px; }
+  @keyframes bounce { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-14px) rotate(3deg); } }
+  .gift.open { animation: pop .5s ease forwards; }
+  @keyframes pop { to { transform: scale(1.6); opacity: 0; } }
+  h1 { font-size: 28px; margin: 12px 0 6px; }
+  .hint { color: var(--muted); font-size: 17px; margin: 0; }
+
+  /* Voucher card */
+  .card {
+    position: relative;
+    background: var(--card);
+    border-radius: 22px;
+    padding: 26px 20px 20px;
+    box-shadow: 0 12px 40px rgba(90, 50, 120, .18);
+    text-align: left;
+    overflow: hidden;
+    border-top: 8px solid var(--accent);
+  }
+  .eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  h2 { font-size: 30px; margin: 6px 0 10px; }
+  .msg { margin: 0 0 18px; line-height: 1.5; color: var(--ink); }
+  .step { font-weight: 600; margin: 0 0 8px; }
+
+  .gifts { display: grid; gap: 10px; margin-bottom: 18px; }
+  .gift-opt {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+    background: #faf6ff;
+    border: 2px solid #eadff7;
+    border-radius: 14px;
+    padding: 12px 14px;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    transition: border-color .15s, background .15s, transform .1s;
+  }
+  .gift-opt:active { transform: scale(.98); }
+  .gift-opt .emoji { font-size: 30px; }
+  .gift-opt strong { display: block; font-size: 16px; }
+  .gift-opt small { color: var(--muted); font-size: 14px; }
+  .gift-opt.selected { border-color: var(--accent); background: #fff0f6; }
+  .gift-opt.selected::after { content: "✓"; margin-left: auto; color: var(--accent); font-weight: 700; font-size: 20px; }
+
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 2px dashed #e3d6f0;
+    border-bottom: 2px dashed #e3d6f0;
+    padding: 12px 0;
+    margin-bottom: 18px;
+  }
+  .meta span { display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+  .meta strong { font-size: 15px; }
+
+  .redeem {
+    width: 100%;
+    border: 0;
+    border-radius: 14px;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--accent);
+    cursor: pointer;
+    transition: background .15s, transform .1s, opacity .15s;
+  }
+  .redeem:hover:not(:disabled) { background: var(--accent-dark); }
+  .redeem:active:not(:disabled) { transform: scale(.98); }
+  .redeem:disabled { opacity: .45; cursor: not-allowed; }
+  .status { text-align: center; color: var(--muted); font-size: 14px; margin: 10px 0 0; min-height: 20px; }
+
+  .terms { margin-top: 12px; font-size: 13px; color: var(--muted); }
+  .terms summary { cursor: pointer; }
+  .terms ul { padding-left: 18px; line-height: 1.6; }
+
+  .stamp {
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-14deg);
+    border: 5px solid #1f9d55;
+    color: #1f9d55;
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    padding: 6px 18px;
+    border-radius: 12px;
+    background: rgba(255,255,255,.85);
+    pointer-events: none;
+    animation: stampIn .4s cubic-bezier(.2,1.6,.4,1);
+  }
+  @keyframes stampIn { from { transform: translate(-50%, -50%) rotate(-14deg) scale(2.2); opacity: 0; } }
+
+  #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gift, .screen, .stamp { animation: none; }
+  }
+</style>
+</head>
+<body>
+<canvas id="confetti"></canvas>
+
+<main>
+  <!-- Screen 1: the gift box -->
+  <section id="cover" class="screen">
+    <div class="gift" id="giftBox" role="button" tabindex="0" aria-label="Tap to unwrap your gift">🎁</div>
+    <h1 id="coverTitle"></h1>
+    <p class="hint">Tap the gift to unwrap</p>
+  </section>
+
+  <!-- Screen 2: the voucher -->
+  <section id="voucher" class="screen hidden">
+    <div class="card">
+      <p class="eyebrow">🎂 Birthday Gift Voucher</p>
+      <h2 id="vName"></h2>
+      <p class="msg" id="vMessage"></p>
+
+      <p class="step">Pick your gift 👇</p>
+      <div class="gifts" id="gifts"></div>
+
+      <div class="meta">
+        <div><span>Voucher code</span><strong id="vCode"></strong></div>
+        <div><span>Valid until</span><strong id="vExpiry"></strong></div>
+      </div>
+
+      <button class="redeem" id="redeemBtn" disabled>Redeem my gift 🎁</button>
+      <p class="status" id="status"></p>
+
+      <details class="terms">
+        <summary>Terms &amp; conditions</summary>
+        <ul id="terms"></ul>
+      </details>
+
+      <div class="stamp hidden" id="stamp">REDEEMED ✓</div>
+    </div>
+  </section>
+</main>
+
+<script>
+/* =========================================================
+   EDIT THIS SECTION ONLY
+   ========================================================= */
+const CONFIG = {
+  name: "Haripriya",
+  from: "Your Name",                 // how she knows you, e.g. "Anna" / "Your brother"
+  whatsapp: "1XXXXXXXXXX",           // your number: digits only, with country code, no + or spaces
+  code: "HARI-BDAY-2026",
+  expiry: "October 16, 2027",
+  message: "Happy Birthday, Haripriya! 🎉 Here is a little something to make your day (and the year ahead) special. Choose one gift below and redeem it whenever you like.",
+  gifts: [
+    { emoji: "🍽️", title: "Dinner of your choice",   desc: "Any restaurant, my treat" },
+    { emoji: "🛍️", title: "Shopping trip",           desc: "A day out, with a surprise budget" },
+    { emoji: "✨", title: "One wish, no questions",  desc: "Within reason, but I'll try!" }
+  ],
+  terms: [
+    "Valid for one gift only.",
+    "Cannot be exchanged for cash.",
+    "Can be redeemed on any day I'm free (I'll make myself free).",
+    "Extension available on request, with a smile."
+  ]
+};
+/* ========================================================= */
+
+const $ = id => document.getElementById(id);
+const STORE_KEY = "voucher-" + CONFIG.code;
+let selected = null;
+
+/* Safe localStorage helpers (can fail in private mode) */
+function load() { try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch (e) { return {}; } }
+function save(data) { try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch (e) {} }
+
+/* Fill in text */
+document.title = "A Birthday Gift for " + CONFIG.name;
+$("coverTitle").textContent = "A gift for " + CONFIG.name + " 🎂";
+$("vName").textContent = CONFIG.name;
+$("vMessage").textContent = CONFIG.message;
+$("vCode").textContent = CONFIG.code;
+$("vExpiry").textContent = CONFIG.expiry;
+CONFIG.terms.forEach(t => { const li = document.createElement("li"); li.textContent = t; $("terms").appendChild(li); });
+
+/* Gift options */
+CONFIG.gifts.forEach((g, i) => {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "gift-opt";
+  b.innerHTML = '<span class="emoji"></span><span><strong></strong><small></small></span>';
+  b.querySelector(".emoji").textContent = g.emoji;
+  b.querySelector("strong").textContent = g.title;
+  b.querySelector("small").textContent = g.desc;
+  b.addEventListener("click", () => chooseGift(i));
+  $("gifts").appendChild(b);
+});
+
+function chooseGift(i) {
+  const state = load();
+  if (state.redeemed) return;              // locked once redeemed
+  selected = i;
+  document.querySelectorAll(".gift-opt").forEach((el, idx) => el.classList.toggle("selected", idx === i));
+  $("redeemBtn").disabled = false;
+  $("redeemBtn").textContent = "Redeem: " + CONFIG.gifts[i].title + " 🎁";
+  $("status").textContent = "";
+}
+
+/* Unwrap */
+function unwrap() {
+  $("giftBox").classList.add("open");
+  setTimeout(() => {
+    $("cover").classList.add("hidden");
+    $("voucher").classList.remove("hidden");
+    confetti();
+  }, 450);
+}
+$("giftBox").addEventListener("click", unwrap);
+$("giftBox").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); unwrap(); } });
+
+/* Redeem */
+function whatsappLink(giftTitle) {
+  const text = "Hi! 🎉 I'd like to redeem my birthday voucher " + CONFIG.code + ": " + giftTitle + ". When are you free?";
+  return "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(text);
+}
+
+$("redeemBtn").addEventListener("click", () => {
+  const state = load();
+  const idx = state.redeemed ? state.giftIndex : selected;
+  if (idx === null || idx === undefined) return;
+  const gift = CONFIG.gifts[idx];
+
+  if (!state.redeemed) {
+    save({ redeemed: true, giftIndex: idx, date: new Date().toDateString() });
+    showRedeemed(idx, new Date().toDateString());
+    confetti();
+  }
+  window.location.href = whatsappLink(gift.title);
+});
+
+function showRedeemed(idx, date) {
+  document.querySelectorAll(".gift-opt").forEach((el, i) => {
+    el.classList.toggle("selected", i === idx);
+    el.disabled = true;
+    el.style.opacity = i === idx ? "1" : ".45";
+  });
+  $("stamp").classList.remove("hidden");
+  $("redeemBtn").disabled = false;
+  $("redeemBtn").textContent = "Message " + CONFIG.from + " on WhatsApp 💬";
+  $("status").textContent = "Redeemed on " + date + ". Tap above if the chat didn't open.";
+}
+
+/* Restore state on reload */
+(function init() {
+  const state = load();
+  if (state.redeemed) {
+    $("cover").classList.add("hidden");
+    $("voucher").classList.remove("hidden");
+    showRedeemed(state.giftIndex, state.date);
+  }
+})();
+
+/* Confetti (no libraries) */
+function confetti() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const c = $("confetti"), ctx = c.getContext("2d");
+  c.width = innerWidth; c.height = innerHeight;
+  const colors = ["#e0457b", "#ffb703", "#8ecae6", "#9b5de5", "#52b788", "#ff6b6b"];
+  const parts = Array.from({ length: 150 }, () => ({
+    x: Math.random() * c.width,
+    y: -20 - Math.random() * c.height * 0.6,
+    w: 6 + Math.random() * 6,
+    h: 8 + Math.random() * 8,
+    vx: -2 + Math.random() * 4,
+    vy: 2 + Math.random() * 4,
+    rot: Math.random() * Math.PI,
+    vr: -0.2 + Math.random() * 0.4,
+    col: colors[Math.floor(Math.random() * colors.length)]
+  }));
+  let frames = 0;
+  (function tick() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    parts.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.col;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    });
+    if (++frames < 240) requestAnimationFrame(tick);
+    else ctx.clearRect(0, 0, c.width, c.height);
+  })();
+}
+</script>
+</body>
+</html>
