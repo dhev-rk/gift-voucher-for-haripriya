@@ -1,0 +1,164 @@
+:root {
+  --bg1: #ffe3ec;
+  --bg2: #e6dcff;
+  --ink: #3b2a4a;
+  --accent: #e0457b;
+  --accent-dark: #b92f61;
+  --card: #ffffff;
+  --muted: #7b6b8a;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--ink);
+  background: linear-gradient(160deg, var(--bg1), var(--bg2));
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+main { width: 100%; max-width: 460px; }
+.hidden { display: none !important; }
+.screen { text-align: center; animation: fadeIn .6s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+/* Cover */
+.gift {
+  font-size: 120px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-block;
+  animation: bounce 1.6s ease-in-out infinite;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.gift:focus-visible { outline: 3px solid var(--accent); border-radius: 16px; }
+@keyframes bounce { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-14px) rotate(3deg); } }
+.gift.open { animation: pop .5s ease forwards; }
+@keyframes pop { to { transform: scale(1.6); opacity: 0; } }
+h1 { font-size: 28px; margin: 12px 0 6px; }
+.hint { color: var(--muted); font-size: 17px; margin: 0; }
+
+/* Voucher card */
+.card {
+  position: relative;
+  background: var(--card);
+  border-radius: 22px;
+  padding: 26px 20px 20px;
+  box-shadow: 0 12px 40px rgba(90, 50, 120, .18);
+  text-align: left;
+  overflow: hidden;
+  border-top: 8px solid var(--accent);
+}
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 700;
+}
+h2 { font-size: 30px; margin: 6px 0 10px; }
+.msg { margin: 0 0 18px; line-height: 1.5; }
+.step { font-weight: 600; margin: 0 0 8px; }
+
+/* Photo (polaroid style) */
+.photo {
+  display: block;
+  width: 70%;
+  max-width: 240px;
+  margin: 4px auto 18px;
+  padding: 8px 8px 22px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(60, 30, 90, .22);
+  transform: rotate(-2.5deg);
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+}
+
+/* Gift options */
+.gifts { display: grid; gap: 10px; margin-bottom: 18px; }
+.gift-opt {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  background: #faf6ff;
+  border: 2px solid #eadff7;
+  border-radius: 14px;
+  padding: 12px 14px;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color .15s, background .15s, transform .1s;
+}
+.gift-opt:active { transform: scale(.98); }
+.gift-opt .emoji { font-size: 30px; }
+.gift-opt strong { display: block; font-size: 16px; }
+.gift-opt small { color: var(--muted); font-size: 14px; }
+.gift-opt.selected { border-color: var(--accent); background: #fff0f6; }
+.gift-opt.selected::after { content: "✓"; margin-left: auto; color: var(--accent); font-weight: 700; font-size: 20px; }
+
+/* Code + expiry strip */
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 2px dashed #e3d6f0;
+  border-bottom: 2px dashed #e3d6f0;
+  padding: 12px 0;
+  margin-bottom: 18px;
+}
+.meta span { display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+.meta strong { font-size: 15px; }
+
+/* Redeem button */
+.redeem {
+  width: 100%;
+  border: 0;
+  border-radius: 14px;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent);
+  cursor: pointer;
+  transition: background .15s, transform .1s, opacity .15s;
+}
+.redeem:hover:not(:disabled) { background: var(--accent-dark); }
+.redeem:active:not(:disabled) { transform: scale(.98); }
+.redeem:disabled { opacity: .45; cursor: not-allowed; }
+.status { text-align: center; color: var(--muted); font-size: 14px; margin: 10px 0 0; min-height: 20px; }
+
+.terms { margin-top: 12px; font-size: 13px; color: var(--muted); }
+.terms summary { cursor: pointer; }
+.terms ul { padding-left: 18px; line-height: 1.6; }
+
+/* Redeemed stamp */
+.stamp {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-14deg);
+  border: 5px solid #1f9d55;
+  color: #1f9d55;
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  padding: 6px 18px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.85);
+  pointer-events: none;
+  animation: stampIn .4s cubic-bezier(.2,1.6,.4,1);
+}
+@keyframes stampIn { from { transform: translate(-50%, -50%) rotate(-14deg) scale(2.2); opacity: 0; } }
+
+#confetti { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
+
+@media (prefers-reduced-motion: reduce) {
+  .gift, .screen, .stamp { animation: none; }
+}
