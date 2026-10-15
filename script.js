@@ -3,7 +3,7 @@
    ========================================================= */
 const CONFIG = {
   name: "Haripriya",
-  from: "Dhev",              // used on the button: "Message your brother on WhatsApp"
+  from: "your brother",              // used on the button: "Message your brother on WhatsApp"
   whatsapp: "13138885733",           // your number: digits only, with country code, no + or spaces
   code: "HARI-BDAY-2026",
   expiry: "October 16, 2027",
