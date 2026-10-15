@@ -17,31 +17,27 @@
     <p class="hint">Tap the gift to unwrap</p>
   </section>
 
-  <!-- Screen 2: the voucher -->
+  <!-- Screen 2: the voucher book -->
   <section id="voucher" class="screen hidden">
     <div class="card">
-      <p class="eyebrow">🎂 Birthday Gift Voucher</p>
+      <p class="eyebrow">🎟️ Birthday Voucher Book</p>
       <h2 id="vName"></h2>
-      <img id="vPhoto" class="photo hidden" alt="Haripriya">
+      <div class="photos hidden" id="vPhotos"></div>
       <p class="msg" id="vMessage"></p>
 
-      <p class="step">Pick your gift 👇</p>
-      <div class="gifts" id="gifts"></div>
-
       <div class="meta">
-        <div><span>Voucher code</span><strong id="vCode"></strong></div>
+        <div><span>Book code</span><strong id="vCode"></strong></div>
         <div><span>Valid until</span><strong id="vExpiry"></strong></div>
+        <div><span>Max value</span><strong id="vMax"></strong></div>
       </div>
 
-      <button class="redeem" id="redeemBtn" disabled>Redeem my gift 🎁</button>
-      <p class="status" id="status"></p>
+      <p class="step">Tap a voucher to open it 👇</p>
+      <div class="vouchers" id="vouchers"></div>
 
       <details class="terms">
         <summary>Terms &amp; conditions</summary>
         <ul id="terms"></ul>
       </details>
-
-      <div class="stamp hidden" id="stamp">REDEEMED ✓</div>
     </div>
   </section>
 </main>

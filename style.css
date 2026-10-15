@@ -6,6 +6,7 @@
   --accent-dark: #b92f61;
   --card: #ffffff;
   --muted: #7b6b8a;
+  --ok: #1f9d55;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; min-height: 100%; }
@@ -19,7 +20,7 @@ body {
   justify-content: center;
   padding: 16px;
 }
-main { width: 100%; max-width: 460px; }
+main { width: 100%; max-width: 480px; }
 .hidden { display: none !important; }
 .screen { text-align: center; animation: fadeIn .6s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
@@ -41,16 +42,17 @@ main { width: 100%; max-width: 460px; }
 h1 { font-size: 28px; margin: 12px 0 6px; }
 .hint { color: var(--muted); font-size: 17px; margin: 0; }
 
-/* Voucher card */
+/* Book card */
 .card {
   position: relative;
   background: var(--card);
   border-radius: 22px;
-  padding: 26px 20px 20px;
+  padding: 26px 18px 20px;
   box-shadow: 0 12px 40px rgba(90, 50, 120, .18);
   text-align: left;
   overflow: hidden;
   border-top: 8px solid var(--accent);
+  margin: 12px 0;
 }
 .eyebrow {
   margin: 0;
@@ -62,103 +64,128 @@ h1 { font-size: 28px; margin: 12px 0 6px; }
 }
 h2 { font-size: 30px; margin: 6px 0 10px; }
 .msg { margin: 0 0 18px; line-height: 1.5; }
-.step { font-weight: 600; margin: 0 0 8px; }
+.step { font-weight: 600; margin: 0 0 10px; }
 
-/* Photo (polaroid style) */
-.photo {
-  display: block;
-  width: 70%;
-  max-width: 240px;
-  margin: 4px auto 18px;
-  padding: 8px 8px 22px;
+/* Photos (two polaroids side by side) */
+.photos {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin: 6px 0 18px;
+}
+.polaroid {
+  flex: 1;
+  max-width: 190px;
+  margin: 0;
+  padding: 8px 8px 10px;
   background: #fff;
   border-radius: 6px;
   box-shadow: 0 6px 18px rgba(60, 30, 90, .22);
   transform: rotate(-2.5deg);
-  object-fit: cover;
-  aspect-ratio: 1 / 1;
 }
-
-/* Gift options */
-.gifts { display: grid; gap: 10px; margin-bottom: 18px; }
-.gift-opt {
-  display: flex;
-  gap: 12px;
-  align-items: center;
+.polaroid:nth-child(even) { transform: rotate(2.5deg); }
+.polaroid img {
+  display: block;
   width: 100%;
-  text-align: left;
-  background: #faf6ff;
-  border: 2px solid #eadff7;
-  border-radius: 14px;
-  padding: 12px 14px;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  transition: border-color .15s, background .15s, transform .1s;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 3px;
 }
-.gift-opt:active { transform: scale(.98); }
-.gift-opt .emoji { font-size: 30px; }
-.gift-opt strong { display: block; font-size: 16px; }
-.gift-opt small { color: var(--muted); font-size: 14px; }
-.gift-opt.selected { border-color: var(--accent); background: #fff0f6; }
-.gift-opt.selected::after { content: "✓"; margin-left: auto; color: var(--accent); font-weight: 700; font-size: 20px; }
+.polaroid figcaption {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-top: 8px;
+}
 
-/* Code + expiry strip */
+/* Code / expiry / max strip */
 .meta {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 10px 12px;
   border-top: 2px dashed #e3d6f0;
   border-bottom: 2px dashed #e3d6f0;
   padding: 12px 0;
   margin-bottom: 18px;
 }
-.meta span { display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
-.meta strong { font-size: 15px; }
+.meta span { display: block; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+.meta strong { font-size: 14px; }
+
+/* Voucher list */
+.vouchers { display: grid; gap: 10px; margin-bottom: 14px; }
+.v-item {
+  background: #faf6ff;
+  border: 2px solid #eadff7;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color .15s, background .15s;
+}
+.v-item.open { border-color: var(--accent); background: #fff8fb; }
+.v-item.done { border-color: #bfe6cf; background: #f3fbf6; }
+.v-head {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  padding: 12px 14px;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.v-head:active { background: rgba(224, 69, 123, .06); }
+.v-emoji { font-size: 30px; }
+.v-titles { flex: 1; min-width: 0; }
+.v-num { display: block; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+.v-title { display: block; font-size: 16px; line-height: 1.25; }
+.v-value { display: block; font-size: 13px; color: var(--muted); margin-top: 2px; }
+.v-chev { color: var(--muted); font-size: 18px; transition: transform .2s; }
+.v-item.open .v-chev { transform: rotate(180deg); }
+.badge {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  color: var(--ok);
+  border: 2px solid var(--ok);
+  border-radius: 8px;
+  padding: 2px 6px;
+  white-space: nowrap;
+  transform: rotate(-6deg);
+}
+.v-body { padding: 0 14px 14px; }
+.v-sub { font-weight: 700; margin: 0 0 6px; }
+.v-desc { margin: 0 0 8px; line-height: 1.5; font-size: 15px; }
+.v-fine { margin: 0 0 14px; font-size: 13px; color: var(--muted); line-height: 1.45; font-style: italic; }
 
 /* Redeem button */
 .redeem {
   width: 100%;
   border: 0;
-  border-radius: 14px;
-  padding: 16px;
-  font-size: 18px;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 16px;
   font-weight: 700;
   color: #fff;
   background: var(--accent);
   cursor: pointer;
-  transition: background .15s, transform .1s, opacity .15s;
+  transition: background .15s, transform .1s;
 }
-.redeem:hover:not(:disabled) { background: var(--accent-dark); }
-.redeem:active:not(:disabled) { transform: scale(.98); }
-.redeem:disabled { opacity: .45; cursor: not-allowed; }
-.status { text-align: center; color: var(--muted); font-size: 14px; margin: 10px 0 0; min-height: 20px; }
+.redeem:hover { background: var(--accent-dark); }
+.redeem:active { transform: scale(.98); }
+.redeem.again { background: var(--ok); }
+.v-status { text-align: center; color: var(--muted); font-size: 13px; margin: 8px 0 0; min-height: 18px; }
 
 .terms { margin-top: 12px; font-size: 13px; color: var(--muted); }
 .terms summary { cursor: pointer; }
 .terms ul { padding-left: 18px; line-height: 1.6; }
 
-/* Redeemed stamp */
-.stamp {
-  position: absolute;
-  top: 42%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-14deg);
-  border: 5px solid #1f9d55;
-  color: #1f9d55;
-  font-size: 34px;
-  font-weight: 800;
-  letter-spacing: .08em;
-  padding: 6px 18px;
-  border-radius: 12px;
-  background: rgba(255,255,255,.85);
-  pointer-events: none;
-  animation: stampIn .4s cubic-bezier(.2,1.6,.4,1);
-}
-@keyframes stampIn { from { transform: translate(-50%, -50%) rotate(-14deg) scale(2.2); opacity: 0; } }
-
 #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
 
 @media (prefers-reduced-motion: reduce) {
-  .gift, .screen, .stamp { animation: none; }
+  .gift, .screen { animation: none; }
 }
