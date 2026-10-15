@@ -3,11 +3,11 @@
    ========================================================= */
 const CONFIG = {
   name: "Haripriya",
-  from: "your brother",              // used on the button: "Message your brother on WhatsApp"
+  from: "Ashwath alias Dhevathi Rajan",              // used on the button: "Message your brother on WhatsApp"
   whatsapp: "13138885733",           // your number: digits only, with country code, no + or spaces
   code: "HARI-BDAY-2026",
   expiry: "October 16, 2027",
-  maxValue: "$100 each",
+  maxValue: "$50 each",
   photos: [                          // delete a line to remove a photo, or use [] to hide all
     { src: "images/then.jpg", caption: "Your 1st birthday 🎂" },
     { src: "images/now.jpg",  caption: "Now ✨" }
@@ -31,14 +31,6 @@ const CONFIG = {
       fine: "Includes 1 full hour of active problem-solving without heavy sighing."
     },
     {
-      emoji: "🍕",
-      title: "The \"I'll Order It For You\" Pass",
-      subtitle: "Emergency Comfort Food Delivery",
-      value: "1 DoorDash / UberEats Rescue Mission (up to $100)",
-      desc: "Redeemable on a rough day. Text me your order (or just your craving), and a full meal or dessert will show up at your doorstep in your city, courtesy of your brother.",
-      fine: "No occasion required. Includes delivery tip. Order total up to $100."
-    },
-    {
       emoji: "📞",
       title: "The Escape Hatch",
       subtitle: "The Fake Emergency Call",
@@ -50,22 +42,22 @@ const CONFIG = {
       emoji: "🍽️",
       title: "Dinner of Your Choice",
       subtitle: "Birthday Treat",
-      value: "1 Dinner (up to $100)",
+      value: "1 Dinner (up to $50)",
       desc: "Pick any restaurant you like, and dinner is on me.",
-      fine: "Total up to $100. Dessert is always included."
+      fine: "Total up to $50. Dessert is always included."
     },
     {
       emoji: "🛍️",
       title: "Shopping Treat",
       subtitle: "Pick Something You Love",
-      value: "1 Gift (up to $100)",
+      value: "1 Gift (up to $50)",
       desc: "Choose something you've had your eye on, and I'll get it for you.",
-      fine: "Total up to $100. No questions about whether you need it."
+      fine: "Total up to $50. No questions about whether you need it."
     }
   ],
   terms: [
     "Each voucher can be redeemed once.",
-    "Gift value is capped at $100 per voucher.",
+    "Dinner and shopping vouchers are capped at $50 each.",
     "Zero refunds. No exchange for cash.",
     "Extension available on request, with a smile."
   ]
@@ -90,18 +82,20 @@ $("vExpiry").textContent = CONFIG.expiry;
 $("vMax").textContent = CONFIG.maxValue;
 /* Photos: each one only appears if its file actually loads */
 (CONFIG.photos || []).forEach(p => {
+  // Create the frame now, in config order, so "then" is always left and "now" is right
+  const fig = document.createElement("figure");
+  fig.className = "polaroid hidden";
   const img = new Image();
   img.alt = p.caption || CONFIG.name;
+  fig.appendChild(img);
+  if (p.caption) {
+    const cap = document.createElement("figcaption");
+    cap.textContent = p.caption;
+    fig.appendChild(cap);
+  }
+  $("vPhotos").appendChild(fig);
   img.onload = () => {
-    const fig = document.createElement("figure");
-    fig.className = "polaroid";
-    fig.appendChild(img);
-    if (p.caption) {
-      const cap = document.createElement("figcaption");
-      cap.textContent = p.caption;
-      fig.appendChild(cap);
-    }
-    $("vPhotos").appendChild(fig);
+    fig.classList.remove("hidden");
     $("vPhotos").classList.remove("hidden");
   };
   img.src = p.src;
