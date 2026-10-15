@@ -3,7 +3,7 @@
    ========================================================= */
 const CONFIG = {
   name: "Haripriya",
-  from: "Ashwath alias Dhevathi Rajan",              // used on the button: "Message your brother on WhatsApp"
+  from: "Dhev",              // used on the button: "Message your brother on WhatsApp"
   whatsapp: "13138885733",           // your number: digits only, with country code, no + or spaces
   code: "HARI-BDAY-2026",
   expiry: "October 16, 2027",
@@ -12,7 +12,7 @@ const CONFIG = {
     { src: "images/then.jpg", caption: "Your 1st birthday 🎂" },
     { src: "images/now.jpg",  caption: "Now ✨" }
   ],
-  message: "Happy Birthday, Haripriya! 🎉 Issued by your younger brother, this voucher book is good for the real-life support you can call on any time. Open a voucher, tap Redeem, and I'll get your message.",
+  message: "Happy Birthday, Haripriya! 🎉 Issued by your older brother, this voucher book is good for the real-life support you can call on any time. Open a voucher, tap Redeem, and I'll get your message.",
   vouchers: [
     {
       emoji: "🛡️",
